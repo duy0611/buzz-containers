@@ -1,0 +1,30 @@
+{
+  "name": "buzz-agents",
+  "image": "mcr.microsoft.com/devcontainers/base:1-ubuntu-24.04",
+  "features": {
+    "ghcr.io/devcontainers-extra/features/apt-get-packages:1": {
+      "packages": "python3,python3-pip,python3-venv"
+    },
+    "ghcr.io/devcontainers-extra/features/mise:1": {},
+    "ghcr.io/devcontainers-extra/features/npm-packages:1": {
+      "packages": "@agentclientprotocol/claude-agent-acp,@anthropic-ai/claude-code"
+    },
+    "ghcr.io/devcontainers/features/github-cli:1": {},
+    "ghcr.io/devcontainers/features/node:2": {}
+  },
+  "overrideFeatureInstallOrder": [
+    "ghcr.io/devcontainers/features/node"
+  ],
+  "containerEnv": {
+    "CLAUDE_CONFIG_DIR": "/var/dev-state/claude",
+    "CODEX_HOME": "/var/dev-state/codex",
+    "GIT_CONFIG_GLOBAL": "/var/dev-state/gitconfig",
+    "HERMES_HOME": "/var/dev-state/hermes",
+    "OPENCODE_CONFIG_DIR": "/var/dev-state/opencode"
+  },
+  "mounts": [
+    "source=dev-buzz-buzz-agents-state,target=/var/dev-state,type=volume"
+  ],
+  "postCreateCommand": "sh .devcontainer/post-create.sh",
+  "remoteUser": "vscode"
+}

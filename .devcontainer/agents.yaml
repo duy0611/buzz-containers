@@ -1,0 +1,13 @@
+version: 1
+
+claude:
+  # anthropic-plugin-directory is built into Claude Code (Anthropic Directory);
+  # it does not need a marketplaces source.
+  plugins:
+    - code-review-anthropics@anthropic-plugin-directory
+    - skill-creator@anthropic-plugin-directory
+    - code-simplifier@anthropic-plugin-directory
+    - claude-md-management@anthropic-plugin-directory
+    - security-guidance@anthropic-plugin-directory
+    - claude-code-setup@anthropic-plugin-directory
+    - frontend-design@anthropic-plugin-directory
