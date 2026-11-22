@@ -8,6 +8,7 @@ Runtime environment for the Buzz agents, managed by `dev` (dev-cli).
 |---|---|
 | dev workspace | `buzz` (provider `local`) |
 | container | `buzz-agents` |
+| mode | `unprotected` (`.git` writable, so agents can commit and use worktrees) |
 | host folder | `/home/dnguyen/Projects/buzz-containers` |
 | tools | `gh`, `claude-code`, `mise`, `claude-agent-acp` (+ `node`, required by Claude) |
 | Buzz CLI mount | `/usr/local/bin/buzz` (read-only, from `.dev/buzz/buzz-linux-amd64`) |
@@ -17,6 +18,13 @@ Runtime environment for the Buzz agents, managed by `dev` (dev-cli).
 The container is built from this project's `.devcontainer/` configuration, not
 from a generated one. dev merges in its own state-volume mount and lifecycle
 settings; the file itself is never edited.
+
+`unprotected` mode lets the agent write `.git` and create worktrees. To make
+`.git` read-only again:
+
+```sh
+dev container rebuild buzz-agents --workspace buzz --mode guarded
+```
 
 Verified inside `buzz-agents`:
 
