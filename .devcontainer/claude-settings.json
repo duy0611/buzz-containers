@@ -2,5 +2,9 @@
   "statusLine": {
     "type": "command",
     "command": "sh /workspaces/buzz-containers/.devcontainer/statusline.sh"
+  },
+  "attribution": {
+    "commit": "",
+    "pr": ""
   }
 }
