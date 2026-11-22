@@ -12,6 +12,7 @@ Runtime environment for the Buzz agents, managed by `dev` (dev-cli).
 | host folder | `/home/dnguyen/Projects/buzz-containers` |
 | tools | `gh`, `claude-code`, `mise`, `claude-agent-acp` (+ `node`, required by Claude) |
 | Buzz CLI mount | `/usr/local/bin/buzz` (read-only, from `.dev/buzz/buzz-linux-amd64`) |
+| repos volume | `dev-buzz-buzz-agents-repos` → `/workspaces` (extra checkouts persist across rebuilds) |
 | harness | `~/.local/bin/dev-acp` |
 | devcontainer CLI | `devcontainer` 0.91.0 (global) |
 
@@ -25,6 +26,27 @@ settings; the file itself is never edited.
 ```sh
 dev container rebuild buzz-agents --workspace buzz --mode guarded
 ```
+
+## Additional repositories
+
+`/workspaces` is itself a named volume (`dev-buzz-buzz-agents-repos`), so
+checkouts created there are siblings of this repository and survive rebuilds.
+Only this project is bind-mounted, at `/workspaces/buzz-containers`; Docker
+applies that nested mount over the volume, so this repository is not copied
+into the volume and other repositories are not part of this checkout.
+
+```sh
+gh repo clone duy0611/my-home-lab /workspaces/my-home-lab
+```
+
+`post-create.sh` chowns the volume root to `vscode` on create/rebuild. Without
+it the volume would be root-owned and the container user could not create
+directories there. The `chown` is deliberately not recursive, so it does not
+walk the nested workspace bind mount.
+
+The volume is created on the first create/rebuild after this change. Remove it
+with `docker volume rm dev-buzz-buzz-agents-repos` once the container is gone;
+that deletes every checkout stored in it.
 
 Verified inside `buzz-agents`:
 

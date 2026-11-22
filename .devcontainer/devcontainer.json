@@ -23,7 +23,8 @@
     "OPENCODE_CONFIG_DIR": "/var/dev-state/opencode"
   },
   "mounts": [
-    "source=dev-buzz-buzz-agents-state,target=/var/dev-state,type=volume"
+    "source=dev-buzz-buzz-agents-state,target=/var/dev-state,type=volume",
+    "source=dev-buzz-buzz-agents-repos,target=/workspaces,type=volume"
   ],
   "postCreateCommand": "sh .devcontainer/post-create.sh",
   "remoteUser": "vscode"

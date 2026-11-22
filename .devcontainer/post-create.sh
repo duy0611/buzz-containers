@@ -4,6 +4,11 @@ set -eu
 # The state volume is mounted as root; hand it to the container user.
 sudo chown vscode:vscode /var/dev-state
 
+# Same for the repos volume at /workspaces. Chown without -R: the workspace
+# bind mount at /workspaces/buzz-containers is a separate mount and must not
+# be walked.
+sudo chown vscode:vscode /workspaces
+
 # Seed Claude's user settings with the host's statusLine. Merge, never replace:
 # agents.yaml later adds enabledPlugins to this same file, and a rebuild must
 # not drop them.
