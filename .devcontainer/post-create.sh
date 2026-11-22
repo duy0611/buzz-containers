@@ -17,3 +17,11 @@ else
   jq '.' "$seed" > "$tmp"
 fi
 mv "$tmp" "$config/settings.json"
+
+# Container-global memory, shared by every repository in this container. The
+# repo copy is the source of truth; edits made only in the container are
+# replaced on the next create/rebuild.
+global_seed="/workspaces/buzz-containers/.devcontainer/CLAUDE.md"
+if [ -f "$global_seed" ]; then
+  cp "$global_seed" "$config/CLAUDE.md"
+fi
